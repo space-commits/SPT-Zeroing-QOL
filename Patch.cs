@@ -13,24 +13,50 @@ using EFT.UI.DragAndDrop;
 using HarmonyLib;
 using BepInEx.Configuration;
 using BepInEx;
+using Aki.Reflection.Utils;
 
 namespace ZeroingQOL
 {
 
     public class DefAmmoPatch : ModulePatch
     {
+        private static Type _ItemFactoryType;
+        private static Type _WeaponTemplateType;
+        private static Type _AmmoTemplateType;
+
+        private static FieldInfo _WeaponTemplateDefAmmoField;
+        private static FieldInfo _ItemFactoryItemTemplatesField;
+        private static FieldInfo _AmmoTemplateCaliberField;
+
+        private static MethodInfo _ItemFactoryInstanceGetter;
+
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(WeaponTemplate).GetMethod("get_DefAmmoTemplate", BindingFlags.Instance | BindingFlags.Public);
+            _ItemFactoryType = PatchConstants.EftTypes.Single(x => x.GetMethod("GetDiscardLimits") != null);
+            _WeaponTemplateType = PatchConstants.EftTypes.Single(x => x.GetField("_defAmmoTemplate", BindingFlags.Instance | BindingFlags.NonPublic) != null);
+            _AmmoTemplateType = PatchConstants.EftTypes.Single(x => x.GetMethod("GetCachedReadonlyQualities") != null);
 
+            _WeaponTemplateDefAmmoField = AccessTools.Field(_WeaponTemplateType, "defAmmo");
+            _ItemFactoryItemTemplatesField = AccessTools.Field(_ItemFactoryType, "ItemTemplates");
+            _AmmoTemplateCaliberField = AccessTools.Field(_AmmoTemplateType, "Caliber");
+
+            Type ItemFactorySingletonType = typeof(Singleton<>).MakeGenericType(_ItemFactoryType);
+            _ItemFactoryInstanceGetter = AccessTools.PropertyGetter(ItemFactorySingletonType, "Instance");
+
+            return AccessTools.Method(_WeaponTemplateType, "get_DefAmmoTemplate");
         }
 
 
         [PatchPrefix]
-        private static bool Prefix(WeaponTemplate __instance, ref AmmoTemplate __result)
+        private static bool Prefix(object __instance, ref object __result)
         {
-            AmmoTemplate defAmmo = (Singleton<ItemFactory>.Instance.ItemTemplates[__instance.defAmmo] as AmmoTemplate);
-            string caliber = defAmmo.Caliber;
+            var itemFactory = _ItemFactoryInstanceGetter.Invoke(null, null);
+
+            var defAmmoName = _WeaponTemplateDefAmmoField.GetValue(__instance) as string;
+            var itemTemplates = _ItemFactoryItemTemplatesField.GetValue(itemFactory) as IDictionary;
+
+            var defAmmo = itemTemplates[defAmmoName];
+            var caliber = _AmmoTemplateCaliberField.GetValue(defAmmo) as string;
 
             if (AmmoDictionaries.DictionaryCollection.TryGetValue(caliber, out Dictionary<string, string> ammoDictionary))
             {
@@ -39,7 +65,7 @@ namespace ZeroingQOL
                     string configValueToUse = configEntry.Value;
                     if (ammoDictionary.TryGetValue(configValueToUse, out string ammoId))
                     {
-                        AmmoTemplate newDefAmmo = (Singleton<ItemFactory>.Instance.ItemTemplates[ammoId] as AmmoTemplate);
+                        var newDefAmmo = itemTemplates[ammoId];
                         __result = newDefAmmo;
                         return false;
                     }
