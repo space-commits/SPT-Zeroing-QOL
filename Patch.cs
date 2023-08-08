@@ -60,7 +60,6 @@ namespace ZeroingQOL
 
             if (caliber == "Caliber26x75")
             {
-                Logger.LogWarning("skipping");
                 return true;
             }
 
@@ -73,7 +72,6 @@ namespace ZeroingQOL
                     {
                         var newDefAmmo = itemTemplates[ammoId];
                         __result = newDefAmmo;
-                        Logger.LogWarning("__result " + ammoId);
                         return false;
                     }
                     else
