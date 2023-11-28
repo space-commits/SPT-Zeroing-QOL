@@ -58,6 +58,11 @@ namespace ZeroingQOL
             var defAmmo = itemTemplates[defAmmoName];
             var caliber = _AmmoTemplateCaliberField.GetValue(defAmmo) as string;
 
+            if (caliber == "Caliber26x75")
+            {
+                return true;
+            }
+
             if (AmmoDictionaries.DictionaryCollection.TryGetValue(caliber, out Dictionary<string, string> ammoDictionary))
             {
                 if (Plugin.ConfigCollection.TryGetValue(caliber, out ConfigEntry<string> configEntry))
