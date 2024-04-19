@@ -11,8 +11,10 @@ namespace ZeroingQOL
     }
 
 
-    public static class AmmoDictionaries 
+    public static class AmmoDictionaries
     {
+        public static Dictionary<string, string> _68x51Dict = new Dictionary<string, string>();
+
         public static Dictionary<string, string> _556x45Dict = new Dictionary<string, string>();
 
         public static Dictionary<string, string> _545x39Dict = new Dictionary<string, string>();  
@@ -92,8 +94,8 @@ namespace ZeroingQOL
             {"Caliber30x29", _30x29Dict},
             {"Caliber40x46", _40x46Dict},
             {"Caliber40mmRU", _40x53Dict},
-            {"Caliber26x75", _26x75Dict}
-
+            {"Caliber26x75", _26x75Dict},
+            {"Caliber68x51", _68x51Dict}
         };
 
     }

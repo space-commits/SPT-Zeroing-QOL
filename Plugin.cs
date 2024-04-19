@@ -25,6 +25,7 @@ namespace ZeroingQOL
         public static ConfigEntry<string> _762x51 { get; set; }
         public static ConfigEntry<string> _762x54R { get; set; }
         public static ConfigEntry<string> _338Lapua { get; set; }
+        public static ConfigEntry<string> _68x51 { get; set; }
 
         public static ConfigEntry<string> _46x30 { get; set; }
         public static ConfigEntry<string> _57x28 { get; set; }
@@ -105,6 +106,7 @@ namespace ZeroingQOL
             string[] _127x108Options = AmmoDictionaries._127x108Dict.Keys.ToArray();
             string[] _762x51Options = AmmoDictionaries._762x51Dict.Keys.ToArray();
             string[] _762x54ROptions = AmmoDictionaries._762x54RDict.Keys.ToArray();
+            string[] _68x51Options = AmmoDictionaries._68x51Dict.Keys.ToArray();
             string[] _338LapuaOptions = AmmoDictionaries._338LapuaDict.Keys.ToArray();
             string[] _46x30Options = AmmoDictionaries._46x30Dict.Keys.ToArray();
             string[] _57x28Options = AmmoDictionaries._57x28Dict.Keys.ToArray();
@@ -140,7 +142,7 @@ namespace ZeroingQOL
             _762x54R = Config.Bind<string>(rifles, "7.62x54R", _762x54ROptions[0], new ConfigDescription("", new AcceptableValueList<string>(_762x54ROptions), new ConfigurationManagerAttributes { Order = 30 }));
             _338Lapua = Config.Bind<string>(rifles, "338 Lapua", _338LapuaOptions[0], new ConfigDescription("", new AcceptableValueList<string>(_338LapuaOptions), new ConfigurationManagerAttributes { Order = 20 }));
             _762x39 = Config.Bind<string>(rifles, "7.62x39", _762x39Options[0], new ConfigDescription("", new AcceptableValueList<string>(_762x39Options), new ConfigurationManagerAttributes { Order = 10 }));
-
+            _68x51 = Config.Bind<string>(rifles, "6.8x51", _68x51Options[0], new ConfigDescription("", new AcceptableValueList<string>(_68x51Options), new ConfigurationManagerAttributes { Order = 9 }));
 
             _46x30 = Config.Bind<string>(pistols, "4.6x30", _46x30Options[0], new ConfigDescription("", new AcceptableValueList<string>(_46x30Options), new ConfigurationManagerAttributes { Order = 80 }));
             _57x28 = Config.Bind<string>(pistols, "5.7x28", _57x28Options[0], new ConfigDescription("", new AcceptableValueList<string>(_57x28Options), new ConfigurationManagerAttributes { Order = 70 }));
@@ -161,6 +163,7 @@ namespace ZeroingQOL
 
             _26x75 = Config.Bind<string>(special, "26x75", _26x75Options[0], new ConfigDescription("", new AcceptableValueList<string>(_26x75Options), new ConfigurationManagerAttributes { Order = 10 }));
 
+            ConfigCollection.Add("Caliber68x51", _68x51);
             ConfigCollection.Add("Caliber556x45NATO", _556x45);
             ConfigCollection.Add("Caliber545x39", _545x39);
             ConfigCollection.Add("Caliber762x35", _300blk);
