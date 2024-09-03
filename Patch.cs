@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Aki.Reflection.Patching;
+using SPT.Reflection.Patching;
 using Comfort.Common;
 using EFT;
 using EFT.Interactive;
@@ -13,7 +13,7 @@ using EFT.UI.DragAndDrop;
 using HarmonyLib;
 using BepInEx.Configuration;
 using BepInEx;
-using Aki.Reflection.Utils;
+using SPT.Reflection.Utils;
 
 namespace ZeroingQOL
 {
