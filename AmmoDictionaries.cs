@@ -51,6 +51,8 @@ namespace ZeroingQOL
 
         public static Dictionary<string, string> _45ACPDict = new Dictionary<string, string>();
 
+        public static Dictionary<string, string> _50AEDict = new Dictionary<string, string>();
+
         public static Dictionary<string, string> _762x25Dict = new Dictionary<string, string>();
 
         public static Dictionary<string, string> _12x70Dict = new Dictionary<string, string>();
@@ -88,6 +90,7 @@ namespace ZeroingQOL
             {"Caliber9x21", _9x21Dict},
             {"Caliber9x33R", _357Dict},
             {"Caliber1143x23ACP", _45ACPDict},
+            {"Caliber127x33", _50AEDict},
             {"Caliber12g", _12x70Dict},
             {"Caliber20g", _20x70Dict},
             {"Caliber23x75", _23x75Dict},
